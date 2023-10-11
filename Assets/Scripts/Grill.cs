@@ -4,15 +4,10 @@ using UnityEngine;
 using DG.Tweening;
 public class Grill : MonoBehaviour
 {
-    Collider _coll;
+    private Collider _coll;
     private void Start()
     {
         _coll = GetComponent<Collider>();
-    }
-
-    private void Update()
-    {
-
     }
     public void CollisionCheck(Vector3 _initPos)
     {

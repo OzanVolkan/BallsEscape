@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using DG.Tweening;
+
 public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     private float deltaX, deltaY;
@@ -26,45 +26,32 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     }
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (GameManager.Instance.IsGridMoving)
+            return;
+
         if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
         {
             if (deltaX > 0)
             {
-                GrillMovement(Vector3.right * moveMultiplier);
+                GameManager.Instance.GrillMovement(Vector3.right * moveMultiplier);
             }
             else
             {
-                GrillMovement(Vector3.left * moveMultiplier);
+                GameManager.Instance.GrillMovement(Vector3.left * moveMultiplier);
             }
         }
         else
         {
             if (deltaY > 0)
             {
-                GrillMovement(Vector3.forward * moveMultiplier);
+                GameManager.Instance.GrillMovement(Vector3.forward * moveMultiplier);
             }
             else
             {
-                GrillMovement(Vector3.back * moveMultiplier);
+                GameManager.Instance.GrillMovement(Vector3.back * moveMultiplier);
             }
         }
     }
 
-    private void GrillMovement(Vector3 vector)
-    {
-        if (GameManager.Instance.CurrentGrill == null)
-            return;
-
-        Vector3 initialPosition = GameManager.Instance.CurrentGrill.localPosition;
-        Vector3 targetPosition = initialPosition + vector;
-
-        GameManager.Instance.CurrentGrill.DOLocalMove(targetPosition, 0.25f).OnComplete(() =>
-        {
-
-            GameManager.Instance.CurrentGrill.GetComponent<Grill>().CollisionCheck(initialPosition);
-            GameManager.Instance.CurrentGrill = null;
-
-        });
-
-    }
+    
 }
