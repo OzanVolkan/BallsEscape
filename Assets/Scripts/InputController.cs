@@ -60,6 +60,7 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
         GameManager.Instance.CurrentGrill.DOLocalMove(targetPosition, 0.25f).OnComplete(() =>
         {
+
             GameManager.Instance.CurrentGrill.GetComponent<Grill>().CollisionCheck(initialPosition);
             GameManager.Instance.CurrentGrill = null;
 

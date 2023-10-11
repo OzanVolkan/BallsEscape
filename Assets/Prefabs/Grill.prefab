@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2454816794996579097}
   - component: {fileID: 3869432313754613286}
-  - component: {fileID: 9097835129770982484}
   m_Layer: 6
   m_Name: Grill
   m_TagString: Untagged
@@ -47,18 +46,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7659216, y: 0.061169326, z: 1.7648823}
   m_Center: {x: -0.9601481, y: -0.028385788, z: 0.95521533}
---- !u!114 &9097835129770982484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2979855125891203491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37450c740cd86874a8d9114478dfd1d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6113453505953675642
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,6 +57,7 @@ GameObject:
   - component: {fileID: 3053852781956966977}
   - component: {fileID: 195442248496714507}
   - component: {fileID: 3716564331926861727}
+  - component: {fileID: 3229009256593827335}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -142,3 +130,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3229009256593827335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113453505953675642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37450c740cd86874a8d9114478dfd1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

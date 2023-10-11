@@ -4,8 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 public class Grill : MonoBehaviour
 {
-    private Collider _coll;
-
+    Collider _coll;
     private void Start()
     {
         _coll = GetComponent<Collider>();
@@ -13,19 +12,21 @@ public class Grill : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
     public void CollisionCheck(Vector3 _initPos)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.localPosition, 1f);
+        Vector3 halfExtents = _coll.bounds.extents;
+
+        Collider[] colliders = Physics.OverlapBox(transform.localPosition, halfExtents, Quaternion.identity);
 
         foreach (Collider collider in colliders)
         {
-
             if (collider.gameObject != gameObject)
             {
                 print(collider.name);
                 transform.DOLocalMove(_initPos, 0.1f);
+                GameManager.Instance.CurrentGrill = null;
             }
         }
     }
@@ -34,8 +35,9 @@ public class Grill : MonoBehaviour
     {
         if (_coll != null)
         {
+            Vector3 halfExtents = _coll.bounds.extents;
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.localPosition, 1f);
+            Gizmos.DrawWireCube(transform.localPosition, 2 * halfExtents);
         }
     }
 }
