@@ -28,36 +28,24 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     {
         if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
         {
-            // Sürükleme yatay yönde gerçekleþiyor.
             if (deltaX > 0)
             {
-                // Pozitif X yönde sürüklendi.
-                Debug.Log("Sürükleme saða doðru.");
                 GrillMovement(Vector3.right * moveMultiplier);
             }
             else
             {
-                // Negatif X yönde sürüklendi.
-                Debug.Log("Sürükleme sola doðru.");
                 GrillMovement(Vector3.left * moveMultiplier);
             }
         }
         else
         {
-            // Sürükleme dikey yönde gerçekleþiyor.
             if (deltaY > 0)
             {
-                // Pozitif Y yönde sürüklendi.
-                Debug.Log("Sürükleme yukarý doðru.");
                 GrillMovement(Vector3.forward * moveMultiplier);
-
             }
             else
             {
-                // Negatif Y yönde sürüklendi.
-                Debug.Log("Sürükleme aþaðý doðru.");
                 GrillMovement(Vector3.back * moveMultiplier);
-
             }
         }
     }
@@ -67,9 +55,15 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
         if (GameManager.Instance.CurrentGrill == null)
             return;
 
-        Vector3 pos = GameManager.Instance.CurrentGrill.localPosition;
+        Vector3 initialPosition = GameManager.Instance.CurrentGrill.localPosition;
+        Vector3 targetPosition = initialPosition + vector;
 
-        GameManager.Instance.CurrentGrill.DOLocalMove(pos + vector, 0.25f);
-        GameManager.Instance.CurrentGrill = null;
+        GameManager.Instance.CurrentGrill.DOLocalMove(targetPosition, 0.25f).OnComplete(() =>
+        {
+            GameManager.Instance.CurrentGrill.GetComponent<Grill>().CollisionCheck(initialPosition);
+            GameManager.Instance.CurrentGrill = null;
+
+        });
+
     }
 }

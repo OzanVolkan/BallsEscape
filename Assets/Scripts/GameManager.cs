@@ -46,11 +46,8 @@ public class GameManager : SingletonManager<GameManager>
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // Layer mask kullanarak çarpýþmayý kontrol et
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
             {
-                // Belirli layer'a sahip objeye dokunuldu
-                Debug.Log("Belirli layer'a sahip objeye dokunuldu: " + hit.collider.gameObject.name);
                 currentGrill = hit.transform;
             }
         }
