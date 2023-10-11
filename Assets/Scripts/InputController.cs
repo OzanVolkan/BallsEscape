@@ -34,10 +34,12 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
             if (deltaX > 0)
             {
                 GameManager.Instance.GrillMovement(Vector3.right * moveMultiplier);
+                AnimationManager.Instance.GridalShake("Right");
             }
             else
             {
                 GameManager.Instance.GrillMovement(Vector3.left * moveMultiplier);
+                AnimationManager.Instance.GridalShake("Left");
             }
         }
         else
@@ -45,10 +47,12 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
             if (deltaY > 0)
             {
                 GameManager.Instance.GrillMovement(Vector3.forward * moveMultiplier);
+                AnimationManager.Instance.GridalShake("Up");
             }
             else
             {
                 GameManager.Instance.GrillMovement(Vector3.back * moveMultiplier);
+                AnimationManager.Instance.GridalShake("Down");
             }
         }
     }
