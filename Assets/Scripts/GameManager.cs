@@ -5,7 +5,20 @@ using System;
 public class GameManager : SingletonManager<GameManager>
 {
     public GameData gameData;
-    
+
+    private Transform currentGrill;
+
+    public Transform CurrentGrill
+    {
+        get { return currentGrill; }
+        set { currentGrill = value; }
+    }
+
+
+    private LayerMask mask = 1 << 6;
+
+
+
     private void OnEnable()
     {
         
@@ -28,7 +41,19 @@ public class GameManager : SingletonManager<GameManager>
     }
     private void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            // Layer mask kullanarak çarpýþmayý kontrol et
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            {
+                // Belirli layer'a sahip objeye dokunuldu
+                Debug.Log("Belirli layer'a sahip objeye dokunuldu: " + hit.collider.gameObject.name);
+                currentGrill = hit.transform;
+            }
+        }
     }
 
     #region EVENTS
