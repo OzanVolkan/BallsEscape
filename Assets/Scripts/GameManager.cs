@@ -86,6 +86,8 @@ public class GameManager : SingletonManager<GameManager>
         }
     }
 
+
+
     #region EVENTS
     private void OnEnable()
     {

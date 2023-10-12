@@ -10,8 +10,16 @@ public class BallManager : SingletonManager<BallManager>
     [SerializeField] private List<GameObject> collectedBalls = new List<GameObject>();
 
     private bool hasFinished;
+    private int collectedAmount;
 
-    void Start()
+    private int totalAmount;
+    public int TotalAmount
+    {
+        get { return totalAmount; }
+        private set { totalAmount = value; }
+    }
+
+    private void Awake()
     {
         GameObject[] ballGroupObjects = GameObject.FindGameObjectsWithTag("BallGroup");
 
@@ -20,6 +28,11 @@ public class BallManager : SingletonManager<BallManager>
             ballGroups.Add(ballGroupObject);
         }
 
+        totalAmount = TotalBallAmount();
+    }
+    void Start()
+    {
+        collectedAmount = 0;
     }
     public IEnumerator CheckIfBallsFree()
     {
@@ -49,6 +62,8 @@ public class BallManager : SingletonManager<BallManager>
                         _ball.DOJump(ballPoints[ran].position, ranPower, ranJump, ranDur).OnComplete(() =>
                         {
                             _ball.gameObject.AddComponent<Rigidbody>();
+                            collectedAmount++;
+                            UIManager.Instance.UpdateCollectedAmount(collectedAmount);
                         });
 
                         yield return new WaitForSeconds(0.1f);
@@ -104,6 +119,13 @@ public class BallManager : SingletonManager<BallManager>
             yield return new WaitForSeconds(1.1f);
 
             AnimationManager.Instance.RewardBoxTurning();
+            UIManager.Instance.WinPanelSwitch();
         }
+    }
+
+    private int TotalBallAmount()
+    {
+        int _total = ballGroups.Count * 9;
+        return _total;
     }
 }

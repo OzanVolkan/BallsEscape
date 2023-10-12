@@ -5,38 +5,40 @@ using System;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class UIManager : MonoBehaviour
+public class UIManager : SingletonManager<UIManager>
 {
     //public TextMeshProUGUI levelCounter;
 
-    //[SerializeField] GameObject winPanel;
-    //[SerializeField] GameObject failPanel;
-    //[SerializeField] GameObject buttonsPanel;
-    //[SerializeField] GameObject greenBut, blueBut, redBut, hand;
+    [SerializeField] private TextMeshProUGUI ballRatio;
+    [SerializeField] private GameObject winPanel, gamePanel;
 
     private void Start()
     {
-        //InvokeRepeating("UIChecker", 0f, 0.1f);
+        UpdateCollectedAmount(0);
     }
 
-    private void UIChecker()
+    public void UpdateCollectedAmount(int _collectedAmount)
     {
-        //levelCounter.text = "Level " + GameManager.Instance.gameData.levelCounter;
+        ballRatio.text = _collectedAmount + "/" + BallManager.Instance.TotalAmount;
+    }
+
+    public void WinPanelSwitch()
+    {
+        winPanel.SetActive(true);
+        gamePanel.SetActive(false);
     }
 
     #region BUTTONS
-    
-    //public void NextButton()
-    //{
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    //    EventManager.Broadcast(GameEvent.OnNext);
-    //    EventManager.Broadcast(GameEvent.OnSave);
-    //}
 
-    //public void RefreshButton()
-    //{
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    //}
+    public void NextButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void RefreshButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     #endregion
 
 }
