@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class UIManager : SingletonManager<UIManager>
 {
-    //public TextMeshProUGUI levelCounter;
-
     [SerializeField] private TextMeshProUGUI ballRatio;
     [SerializeField] private GameObject winPanel, gamePanel;
 

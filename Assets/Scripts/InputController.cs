@@ -7,12 +7,6 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
 {
     private float deltaX, deltaY;
     private float moveMultiplier = 1.93f;
-    private void OnEnable()
-    {
-    }
-    private void OnDisable()
-    {
-    }
 
     public void OnDrag(PointerEventData eventData)
     {

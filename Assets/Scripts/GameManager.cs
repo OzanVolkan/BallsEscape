@@ -6,8 +6,6 @@ using DG.Tweening;
 
 public class GameManager : SingletonManager<GameManager>
 {
-    public GameData gameData;
-
     private GameObject[] gridalGroup;
 
     private Transform currentGrill;
@@ -27,11 +25,6 @@ public class GameManager : SingletonManager<GameManager>
 
     private LayerMask mask = 1 << 6;
 
-
-    private void Awake()
-    {
-        //OnLoad();
-    }
     private void Start()
     {
         gridalGroup = GameObject.FindGameObjectsWithTag("Gridal");
@@ -85,47 +78,4 @@ public class GameManager : SingletonManager<GameManager>
             item.transform.DOMoveZ(item.transform.position.z + 15f, 0.5f).SetEase(Ease.InBack);
         }
     }
-
-
-
-    #region EVENTS
-    private void OnEnable()
-    {
-
-        EventManager.AddHandler(GameEvent.OnSave, new Action(OnSave));
-    }
-
-    private void OnDisable()
-    {
-
-        EventManager.RemoveHandler(GameEvent.OnSave, new Action(OnSave));
-    }
-
-    #endregion
-
-    #region SAVE & LOAD
-    void OnSave()
-    {
-        SaveManager.SaveData(gameData);
-    }
-
-    void OnLoad()
-    {
-#if !UNITY_EDITOR
-        SaveManager.LoadData(gameData);
-#endif
-    }
-    public void OnApplicationQuit()
-    {
-        OnSave();
-    }
-    public void OnApplicationFocus(bool focus)
-    {
-        if (focus == false) OnSave();
-    }
-    public void OnApplicationPause(bool pause)
-    {
-        if (pause == true) OnSave();
-    }
-    #endregion
 }
