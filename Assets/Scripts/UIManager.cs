@@ -32,7 +32,12 @@ public class UIManager : SingletonManager<UIManager>
 
     public void NextButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        int _index = SceneManager.GetActiveScene().buildIndex;
+
+        if (_index < 4)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else
+            SceneManager.LoadScene(0);
     }
 
     public void RefreshButton()

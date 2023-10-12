@@ -38,7 +38,7 @@ public class BallManager : SingletonManager<BallManager>
     {
         yield return new WaitForSeconds(.15f);
 
-        for (int i = 0; i < ballGroups.Count; i++)
+        for (int i = ballGroups.Count - 1; i >= 0; i--)
         {
             RaycastHit hit;
             if (Physics.Raycast(ballGroups[i].transform.position, Vector3.up, out hit, Mathf.Infinity))
@@ -50,6 +50,8 @@ public class BallManager : SingletonManager<BallManager>
                     ballGroups.Remove(_group);
                     collectedGroups.Add(_group.gameObject);
 
+                    GameManager.Instance.IsGridMoving = true;
+
                     for (int j = 0; j < _group.transform.childCount; j++)
                     {
                         Transform _ball = _group.transform.GetChild(j).transform;
@@ -57,7 +59,7 @@ public class BallManager : SingletonManager<BallManager>
                         int ran = Random.Range(0, ballPoints.Length);
                         float ranPower = Random.Range(2f, 2.25f);
                         int ranJump = Random.Range(1, 3);
-                        float ranDur = Random.Range(0.5f, 1f);
+                        float ranDur = 0.4f;
 
                         _ball.DOJump(ballPoints[ran].position, ranPower, ranJump, ranDur).OnComplete(() =>
                         {
@@ -73,6 +75,8 @@ public class BallManager : SingletonManager<BallManager>
                             collectedBalls.Add(_ball.gameObject);
                         }
                     }
+
+                    GameManager.Instance.IsGridMoving = false;
                 }
             }
         }
@@ -109,7 +113,7 @@ public class BallManager : SingletonManager<BallManager>
                 Vector3 _pos = RewardBox.Instance.BallSlots[i].position;
                 float _power = 2f;
                 int _jumpCount = 1;
-                float _dur = 1f;
+                float _dur = .5f;
 
                 collectedBalls[i].transform.DOJump(_pos, _power, _jumpCount, _dur);
 
