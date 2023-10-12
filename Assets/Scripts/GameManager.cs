@@ -66,6 +66,8 @@ public class GameManager : SingletonManager<GameManager>
             CurrentGrill.GetComponent<Grill>().CollisionCheck(initialPosition);
             CurrentGrill = null;
             isGridMoving = false;
+
+            StartCoroutine(BallManager.Instance.CheckIfBallsFree());
         });
 
     }
