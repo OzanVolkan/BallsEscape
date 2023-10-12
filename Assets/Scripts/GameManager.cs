@@ -8,6 +8,8 @@ public class GameManager : SingletonManager<GameManager>
 {
     public GameData gameData;
 
+    private GameObject[] gridalGroup;
+
     private Transform currentGrill;
     public Transform CurrentGrill
     {
@@ -16,7 +18,6 @@ public class GameManager : SingletonManager<GameManager>
     }
 
     private bool isGridMoving;
-
     public bool IsGridMoving
     {
         get { return isGridMoving; }
@@ -33,7 +34,12 @@ public class GameManager : SingletonManager<GameManager>
     }
     private void Start()
     {
+        gridalGroup = GameObject.FindGameObjectsWithTag("Gridal");
 
+        foreach (var item in gridalGroup)
+        {
+            item.transform.DOShakeScale(1f, 0.25f, 5);
+        }
 
     }
     private void Update()
@@ -70,6 +76,14 @@ public class GameManager : SingletonManager<GameManager>
             StartCoroutine(BallManager.Instance.CheckIfBallsFree());
         });
 
+    }
+
+    public void MoveAwayGridals()
+    {
+        foreach (var item in gridalGroup)
+        {
+            item.transform.DOMoveZ(item.transform.position.z + 15f, 0.5f).SetEase(Ease.InBack);
+        }
     }
 
     #region EVENTS

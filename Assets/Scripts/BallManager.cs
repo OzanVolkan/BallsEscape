@@ -70,8 +70,13 @@ public class BallManager : SingletonManager<BallManager>
 
     private IEnumerator LineUpBalls()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(3f);
 
+        GameManager.Instance.MoveAwayGridals();
+
+        yield return new WaitForSeconds(0.5f);
+
+        RewardBox.Instance.ShowRewardBox();
         AnimationManager.Instance.BallBoxWin();
 
         yield return new WaitForSeconds(1.5f);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class RewardBox : SingletonManager<RewardBox>
 {
@@ -10,15 +11,9 @@ public class RewardBox : SingletonManager<RewardBox>
         get { return ballSlots; }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void ShowRewardBox()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Vector3 newPos = new Vector3(0f, 2f, 0f);
+        transform.DOMove(newPos, 1f).SetEase(Ease.OutBack);
     }
 }
