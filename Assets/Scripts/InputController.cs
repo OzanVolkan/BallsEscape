@@ -26,7 +26,7 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (GameManager.Instance.IsGridMoving)
+        if (GameManager.Instance.IsGridMoving || GameManager.Instance.CurrentGrill == null)
             return;
 
         if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
