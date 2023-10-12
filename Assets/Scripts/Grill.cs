@@ -19,7 +19,6 @@ public class Grill : MonoBehaviour
         {
             if (collider.gameObject != gameObject)
             {
-                print(collider.name);
                 transform.DOLocalMove(_initPos, 0.1f);
                 GameManager.Instance.CurrentGrill = null;
             }

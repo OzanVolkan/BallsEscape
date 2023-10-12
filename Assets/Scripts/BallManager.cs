@@ -7,6 +7,9 @@ public class BallManager : SingletonManager<BallManager>
     [SerializeField] private Transform[] ballPoints;
     [SerializeField] private List<GameObject> ballGroups;
     [SerializeField] private List<GameObject> collectedGroups = new List<GameObject>();
+    [SerializeField] private List<GameObject> collectedBalls = new List<GameObject>();
+
+    private bool hasFinished;
 
     void Start()
     {
@@ -16,6 +19,7 @@ public class BallManager : SingletonManager<BallManager>
         {
             ballGroups.Add(ballGroupObject);
         }
+
     }
     public IEnumerator CheckIfBallsFree()
     {
@@ -48,9 +52,53 @@ public class BallManager : SingletonManager<BallManager>
                         });
 
                         yield return new WaitForSeconds(0.1f);
+
+                        if (!collectedBalls.Contains(_ball.gameObject))
+                        {
+                            collectedBalls.Add(_ball.gameObject);
+                        }
                     }
                 }
             }
+        }
+
+        if (ballGroups.Count > 0)
+            yield break;
+
+        StartCoroutine(LineUpBalls());
+    }
+
+    private IEnumerator LineUpBalls()
+    {
+        yield return new WaitForSeconds(3.5f);
+
+        AnimationManager.Instance.BallBoxWin();
+
+        yield return new WaitForSeconds(1.5f);
+
+        if (!hasFinished)
+        {
+            hasFinished = true;
+
+            for (int i = 0; i < collectedBalls.Count; i++)
+            {
+                collectedBalls[i].transform.SetParent(RewardBox.Instance.transform);
+
+                collectedBalls[i].GetComponent<Rigidbody>().isKinematic = true;
+
+                Vector3 _pos = RewardBox.Instance.BallSlots[i].position;
+                float _power = 2f;
+                int _jumpCount = 1;
+                float _dur = 1f;
+
+                collectedBalls[i].transform.DOJump(_pos, _power, _jumpCount, _dur);
+
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            yield return new WaitForSeconds(1.1f);
+
+            AnimationManager.Instance.RewardBoxTurning();
         }
     }
 }
